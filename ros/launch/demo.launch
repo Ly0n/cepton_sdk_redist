@@ -1,0 +1,17 @@
+<!-- Launches SDK driver and rviz. -->
+<launch>
+  <arg name="capture_path" default="$(find cepton_ros)/tests/1/lidar.pcap" doc="Capture replay PCAP file path."/>
+  <arg name="rviz_config_path" default="$(find cepton_ros)/launch/rviz.launch" doc="rviz config file path."/>
+  <arg name="settings_dir" default="" doc="Sensor settings directory."/>
+
+  <include file="$(find cepton_ros)/launch/manager.launch"/>
+
+  <include file="$(find cepton_ros)/launch/driver.launch">
+    <arg name="capture_path" value="$(arg capture_path)"/>
+    <param name="settings_dir" value="$(arg settings_dir)"/>
+  </include>
+
+  <include file="$(find cepton_ros)/launch/rviz.launch">
+    <arg name="rviz_config_path" value="$(arg rviz_config_path)" if="$(eval rviz_config_path != '')"/>
+  </include>
+</launch>
